@@ -7,15 +7,17 @@ class JoueursManager extends Component {
     state = {
         personnage:{
             image: 1,
-            force: 0,
-            agilite: 0,
-            intelligence: 0
-        }
+            force: 2,
+            agilite: 1,
+            intelligence: 4
+        },
+        pointCarac: 7
     }
     /*la fonction rajoute 1 à l'image pour changer de personnages tant que le chiffre vaut entre 1 et 3. */
     handleNextImage = () => {
         this.setState(oldState => {
             const newPersonnage = {...oldState.personnage}
+            /**Si je clique sur le bouton est que l'image vaut 3 alors je veux revenir à l'image 1 */
             if(oldState.personnage.image >= 3) newPersonnage.image = 1;
             else newPersonnage.image++;
             return{ personnage: newPersonnage }
@@ -36,6 +38,7 @@ class JoueursManager extends Component {
                 <DetailsPerso {...this.state.personnage}
                     nextImage={this.handleNextImage}
                     previousImage={this.handlePreviousImage}
+                    pointsDispo = {this.state.pointCarac}
                 />
                 <div>Armes</div>
                 <div className="row no-gutters">
