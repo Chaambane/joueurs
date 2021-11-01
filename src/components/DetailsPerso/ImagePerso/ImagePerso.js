@@ -27,11 +27,11 @@ const imagePerso = (props) => {
 
     return(
         <div className="row no gutters align-items-center container">
-            <div className={["col-1", Classes.fleche, Classes.gauche].join(' ')} onClick={()=> console.log("Moins")}></div>
+            <div className={["col-1", Classes.fleche, Classes.gauche].join(' ')} onClick={props.previousImage}></div>
             <div className="col text-center">
                 <img src={choixImg} alt="imgPerso"/>
             </div>
-            <div className={["col-1", Classes.fleche, Classes.droite].join(' ')} onClick={()=> console.log("Plus")}></div>
+            <div className={["col-1", Classes.fleche, Classes.droite].join(' ')} onClick={props.nextImage}></div>
         </div>
     )
 };

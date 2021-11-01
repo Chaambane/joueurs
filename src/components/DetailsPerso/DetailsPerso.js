@@ -4,7 +4,10 @@ import ImagePerso from './ImagePerso/ImagePerso';
 const detailsPerso = (props) => (
     <div className="row no-gutters">
         <div className="col-6">
-            <ImagePerso persoImg={props.image}/>
+            <ImagePerso persoImg={props.image}
+                nextImage={props.nextImage}
+                previousImage={props.previousImage}
+            />
         </div>
         <div className="col-6">
             force: {props.force} <br />
