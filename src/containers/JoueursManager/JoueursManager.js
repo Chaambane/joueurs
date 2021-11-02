@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TitleH1 from '../../components/TitleH1/TitleH1';
 import Button from '../../components/Button/Button';
 import DetailsPerso from '../../components/DetailsPerso/DetailsPerso';
+import Armes from '../../components/Armes/Armes';
 
 class JoueursManager extends Component {
     state = {
@@ -11,9 +12,10 @@ class JoueursManager extends Component {
             agilite: 0,
             intelligence: 0
         },
-        pointCarac: 7
+        pointCarac: 7,
+        armes: ["epee", "fleau", "arc", "hache"]
     }
-    
+
     /*la fonction rajoute 1 à l'image pour changer de personnages tant que le chiffre vaut entre 1 et 3. */
     handleNextImage = () => {
         this.setState(oldState => {
@@ -73,7 +75,7 @@ class JoueursManager extends Component {
                     enleverPoints={this.handleEnleverPoints}
                     rajouterPoints={this.handleRajouterPoints}
                 />
-                <div>Armes</div>
+                <Armes listeArmes = {this.state.armes}/>
                 <div className="row no-gutters">
                     <div className="col-6">
                         <Button clrBtn="btn-danger" clic={() => console.log("Réinitialiser")}>Réinitialiser</Button>
