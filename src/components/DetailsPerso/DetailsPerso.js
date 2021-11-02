@@ -16,6 +16,8 @@ const detailsPerso = (props) => (
                 force= {props.force}
                 agilite= {props.agilite}
                 intelligence= {props.intelligence}
+                enleverPoints={props.enleverPoints}
+                rajouterPoints={props.rajouterPoints}
             />
         </div>
     </div>
