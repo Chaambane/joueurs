@@ -3,6 +3,7 @@ import TitleH1 from '../../components/TitleH1/TitleH1';
 import Button from '../../components/Button/Button';
 import DetailsPerso from '../../components/DetailsPerso/DetailsPerso';
 import Armes from '../../components/Armes/Armes';
+import axios from 'axios';
 
 class JoueursManager extends Component {
     state = {
@@ -14,8 +15,30 @@ class JoueursManager extends Component {
             arme: null
         },
         pointCarac: 7,
-        armes: ["epee", "fleau", "arc", "hache"]
+        armes: null,
+        loading: false
     }
+
+    // Axios va essayer de récupérer les informations dès lors que l'application est chargée,je vais les récupérer en Json ensuite je les place dans un tableau avec Object.value, enfin je ferai un setState pour mettre à jour la valeur de armes dans les states. 
+    componentDidMount = () => {
+        this.setState({loading: true});
+        axios.get('https://create-perso-default-rtdb.firebaseio.com/armes.json')
+            .then(response => {
+                // console.log(response);
+                const tableauArmes = Object.values(response.data);
+                // console.log(tableauArmes);
+                this.setState({
+                    armes: tableauArmes,
+                    loading: false
+                })
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    loading: false
+                })
+            })
+    };
 
     /*la fonction rajoute 1 à l'image pour changer de personnages tant que le chiffre vaut entre 1 et 3. */
     handleNextImage = () => {
@@ -87,7 +110,12 @@ class JoueursManager extends Component {
             pointCarac: 7,
             armes: ["epee", "fleau", "arc", "hache"]
         })
-    }
+    };
+
+    /**La fonction handleValiderMonPersonnage devra permettre la sauvegarde de mon personnage dans la base de donné Firebase */
+    handleValiderMonPersonnage = () => {
+        alert("Personnage Créer");
+    };
 
     render() {
         return (
@@ -100,10 +128,21 @@ class JoueursManager extends Component {
                     enleverPoints={this.handleEnleverPoints}
                     rajouterPoints={this.handleRajouterPoints}
                 />
-                <Armes listeArmes = {this.state.armes} 
-                    changeArmePerso={this.handleChoixArmePersonnage} 
-                    etatArme={this.state.personnage.arme}
-                />
+                {
+                    this.state.loading &&
+                    <button className="btn btn-info" type="button" disabled>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                }
+                {/**Je teste si armes dans les states et à true j'affiche les armes sinon je laisse un vide. */}
+                {
+                    this.state.armes &&
+                    <Armes listeArmes = {this.state.armes} 
+                        changeArmePerso={this.handleChoixArmePersonnage} 
+                        etatArme={this.state.personnage.arme}
+                    />
+                }
                 <div className="row no-gutters">
                     <div className="col-6">
                         <Button clrBtn="btn-danger" clic={this.handleReinitialiserCreationPerso}>Réinitialiser</Button>
