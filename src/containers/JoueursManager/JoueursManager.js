@@ -16,13 +16,14 @@ class JoueursManager extends Component {
         },
         pointCarac: 7,
         armes: null,
-        loading: false
+        loading: false,
+        createurPerso: ""
     }
 
     // Axios va essayer de récupérer les informations dès lors que l'application est chargée,je vais les récupérer en Json ensuite je les place dans un tableau avec Object.value, enfin je ferai un setState pour mettre à jour la valeur de armes dans les states. 
     componentDidMount = () => {
         this.setState({loading: true});
-        axios.get('https://create-perso-default-rtdb.firebaseio.com/armes.json')
+        axios.get('https://create-perso-default-rtdb.firebaseio.com/armes.json') // Ne pas oublie le .Json
             .then(response => {
                 // console.log(response);
                 const tableauArmes = Object.values(response.data);
@@ -108,19 +109,49 @@ class JoueursManager extends Component {
                 arme: null
             },
             pointCarac: 7,
-            armes: ["epee", "fleau", "arc", "hache"]
+            armes: ["epee", "fleau", "arc", "hache"],
+            loading: false,
+            createurPerso: ""
         })
     };
 
-    /**La fonction handleValiderMonPersonnage devra permettre la sauvegarde de mon personnage dans la base de donné Firebase */
+    /**La fonction handleValiderMonPersonnage devra permettre la sauvegarde de mon personnage et de la personne qui la créer dans la base de donné Firebase*/
     handleValiderMonPersonnage = () => {
-        alert("Personnage Créer");
+        this.setState({loading: true});
+        const joueur = {
+            nom: this.state.createurPerso,
+            monPersonnage: {...this.state.personnage}
+        }
+        axios.post('https://create-perso-default-rtdb.firebaseio.com/persos.json',joueur) // On rentre l'url de la BD et le nom de la collection qu'on veut créer dans la BD après l'envoie ici c'est perso.json auquel on rajoute le personnage créer ici joueur.
+            .then(response => {
+                console.log(response);
+                this.setState({loading: false})
+                this.handleReinitialiserCreationPerso();
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({loading: false})
+                this.handleReinitialiserCreationPerso();
+            })
+        // Après la création du personnage je reinitialise les données.
     };
 
     render() {
         return (
             <main className="container">
                 <TitleH1>Créateur de personnage</TitleH1>
+
+                <div className="input-group flex-nowrap">
+                    <input type="text" 
+                        className="form-control" 
+                        placeholder="Nom du Personnage" 
+                        aria-label="Username" 
+                        aria-describedby="addon-wrapping"
+                        value={this.state.createurPerso}
+                        onChange={(e) => this.setState({createurPerso: e.target.value})}
+                    />
+                </div>
+
                 <DetailsPerso {...this.state.personnage}
                     nextImage={this.handleNextImage}
                     previousImage={this.handlePreviousImage}
