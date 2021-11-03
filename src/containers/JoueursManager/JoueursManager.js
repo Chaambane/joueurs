@@ -74,6 +74,21 @@ class JoueursManager extends Component {
             this.setState({personnage: newPersonnage});
     }
 
+    /**La fonction handleReinitialiserCreationPerso devra permettre à l'utilisateur de revenir à l'état initiale de création d'un personnage.*/
+    handleReinitialiserCreationPerso = () => {
+        this.setState({
+            personnage:{
+                image: 1,
+                force: 0,
+                agilite: 0,
+                intelligence: 0,
+                arme: null
+            },
+            pointCarac: 7,
+            armes: ["epee", "fleau", "arc", "hache"]
+        })
+    }
+
     render() {
         return (
             <main className="container">
@@ -91,10 +106,10 @@ class JoueursManager extends Component {
                 />
                 <div className="row no-gutters">
                     <div className="col-6">
-                        <Button clrBtn="btn-danger" clic={() => console.log("Réinitialiser")}>Réinitialiser</Button>
+                        <Button clrBtn="btn-danger" clic={this.handleReinitialiserCreationPerso}>Réinitialiser</Button>
                     </div>
                     <div className="col-6">
-                        <Button clrBtn="btn-success" clic={() => console.log("Créer")}>Créer</Button>
+                        <Button clrBtn="btn-success" clic={this.handleValiderMonPersonnage}>Créer</Button>
                     </div>
                 </div>
             </main>
