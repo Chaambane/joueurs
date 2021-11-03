@@ -24,8 +24,11 @@ const armes = (props) => {
                         default: return null;
                     }
                     return (
-                        <div className="col-3">
-                            <Arme key={arme} imgArme={choixArme}>{arme}</Arme>
+                        <div className="col-3" key={arme}>
+                            <Arme imgArme={choixArme} 
+                                changeArmePerso={() => props.changeArmePerso(arme)} // On éxécute la méthode pour modifier la valeur de l'arme du personnage.
+                                etatArme={props.etatArme === arme} // Vérifie si l'état de arme dans les states du personnage sont égale au nom de l'arme.
+                            >{arme}</Arme>
                         </div>
                     )
                 })

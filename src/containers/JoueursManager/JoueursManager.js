@@ -10,7 +10,8 @@ class JoueursManager extends Component {
             image: 1,
             force: 0,
             agilite: 0,
-            intelligence: 0
+            intelligence: 0,
+            arme: null
         },
         pointCarac: 7,
         armes: ["epee", "fleau", "arc", "hache"]
@@ -35,6 +36,7 @@ class JoueursManager extends Component {
             return{ personnage: newPersonnage }
         });
     };
+    
     /**La fonction doit mettre à jour une caractéristique d'un joueur en rajouter des points tant que la caractéristique en contient moins de 5 et que pointCarac dans les state soit supérieur à 1. */
     handleRajouterPoints = (carac) => {
         this.setState((oldState) => {
@@ -64,6 +66,14 @@ class JoueursManager extends Component {
             }
         });
     };
+
+    /**La fonction handleChoixArmePersonnage reçoit en paramètre l'arme cliqué, ensuite on procède à la modification de la valeur du personnage en procédant à la fusion des données. */
+    handleChoixArmePersonnage = (arme) => {
+            const newPersonnage = {...this.state.personnage};
+            newPersonnage.arme = arme;
+            this.setState({personnage: newPersonnage});
+    }
+
     render() {
         return (
             <main className="container">
@@ -75,7 +85,10 @@ class JoueursManager extends Component {
                     enleverPoints={this.handleEnleverPoints}
                     rajouterPoints={this.handleRajouterPoints}
                 />
-                <Armes listeArmes = {this.state.armes}/>
+                <Armes listeArmes = {this.state.armes} 
+                    changeArmePerso={this.handleChoixArmePersonnage} 
+                    etatArme={this.state.personnage.arme}
+                />
                 <div className="row no-gutters">
                     <div className="col-6">
                         <Button clrBtn="btn-danger" clic={() => console.log("Réinitialiser")}>Réinitialiser</Button>
