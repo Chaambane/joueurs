@@ -128,6 +128,7 @@ class JoueursManager extends Component {
                 console.log(response);
                 this.setState({loading: false})
                 this.handleReinitialiserCreationPerso();
+                this.props.refresh();
             })
             .catch(error => {
                 console.log(error);
@@ -183,7 +184,6 @@ class JoueursManager extends Component {
                         <Button clrBtn="btn-success" clic={this.handleValiderMonPersonnage}>Créer</Button>
                     </div>
                 </div>
-                <AffichageJoueurs/>
             </main>
         )
     };

@@ -10,8 +10,8 @@ class AffichageJoueurs extends Component {
         loading: false
     }
 
-    // La fonction récupère les données des personnages crées dans la BD et met à jour le state mesJoueurs.
-    componentDidMount = () => {
+    // La fonction loadData récupère les données des personnages crées dans la BD et met à jour le state mesJoueurs.
+    loadData = () => {
         this.setState({loading:true});
         axios.get('https://create-perso-default-rtdb.firebaseio.com/persos.json')
             .then(response => {
@@ -26,10 +26,22 @@ class AffichageJoueurs extends Component {
                 console.log(error);
                 this.setState({loading:true});
             })
+    };
+
+    componentDidMount = () => {
+        this.loadData();
+    };
+
+    // La fonction permet de mettre à jour l'affichage des joueurs lorsque la proprété refresh est différente de celle qu'on reçoit à savoir false.
+    componentDidUpdate = (oldProps) => {
+        if(oldProps.refresh !== this.props.refresh){
+            this.loadData();
+        }
     }
+
     render() {
         return (
-            <section className="container d-flex flew-wrap mt-2">
+            <section className="container d-flex flex-wrap mt-2">
             {
                 this.state.loading && // J'utilise un spinner pour rendre le téléchargement de mes données visible.
                 <div className="spinner-border text-success" role="status">
