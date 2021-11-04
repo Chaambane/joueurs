@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button';
 import DetailsPerso from '../../components/DetailsPerso/DetailsPerso';
 import Armes from '../../components/Armes/Armes';
 import axios from 'axios';
+import AffichageJoueurs from '../AffichageJoueurs/AffichageJoueurs';
 
 class JoueursManager extends Component {
     state = {
@@ -182,6 +183,7 @@ class JoueursManager extends Component {
                         <Button clrBtn="btn-success" clic={this.handleValiderMonPersonnage}>Créer</Button>
                     </div>
                 </div>
+                <AffichageJoueurs/>
             </main>
         )
     };
