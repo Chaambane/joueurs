@@ -4,7 +4,6 @@ import Button from '../../components/Button/Button';
 import DetailsPerso from '../../components/DetailsPerso/DetailsPerso';
 import Armes from '../../components/Armes/Armes';
 import axios from 'axios';
-import AffichageJoueurs from '../AffichageJoueurs/AffichageJoueurs';
 
 class JoueursManager extends Component {
     state = {

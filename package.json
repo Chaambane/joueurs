@@ -1,5 +1,6 @@
 {
   "name": "joueurs",
+  "homepage": "http://www.fmchaambane.com/react/joueurs/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
